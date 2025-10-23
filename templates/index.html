@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <title>Stock Market Predictor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>📈 Stock Market Predictor</h1>
-        <form method="POST" action="/predict">
-            <input type="text" name="symbol" placeholder="Enter Stock Symbol (e.g. AAPL)" required>
-            <button type="submit">Predict</button>
-        </form>
+        <h1>📊 Stock Market Predictor</h1>
+        <div class="card">
+            <form method="POST" action="/">
+                <input type="text" name="symbol" placeholder="Enter Stock Symbol (e.g., AAPL)" required>
+                <button type="submit">Predict</button>
+            </form>
+        </div>
 
         {% if prediction %}
-        <div class="result">
+        <div class="result-card">
             <h2>Predicted Price for {{ symbol }}: ₹{{ prediction }}</h2>
+            <p style="color: green; font-weight: 600; font-size: 1.2rem;">{{ suggestion }}</p>
+            <p style="color: #333; font-size: 1rem;">{{ reasoning }}</p>
             <img src="{{ url_for('static', filename=symbol + '_plot.png') }}" alt="Stock Plot">
         </div>
         {% endif %}

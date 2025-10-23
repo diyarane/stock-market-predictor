@@ -1,21 +1,33 @@
 from flask import Flask, render_template, request
-from model import predict_stock
-import os
+from model import predict_stock_price, get_buy_suggestion, save_plot
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    if request.method == 'POST':
+        symbol = request.form['symbol'].upper()
+        predicted_price, last_close, data_recent = predict_stock_price(symbol)
+        suggestion, reasoning = get_buy_suggestion(last_close, predicted_price)
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    symbol = request.form['symbol']
-    prediction, plot_path = predict_stock(symbol)
-    return render_template('index.html', prediction=prediction, plot_path=plot_path, symbol=symbol)
+        # Save plot for frontend
+        plot_path = f"static/{symbol}_plot.png"
+        save_plot(symbol, predicted_price, data_recent, plot_path)
+
+        return render_template(
+            'index.html',
+            prediction=predicted_price,
+            symbol=symbol,
+            suggestion=suggestion,
+            reasoning=reasoning
+        )
+
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 
 
 
