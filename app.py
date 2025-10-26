@@ -60,3 +60,11 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+'''
+cd ~/Desktop/stock-market-predictor
+
+source venv/bin/activate
+
+python -m flask run --host=0.0.0.0 --port=8080
+'''
