@@ -19,9 +19,40 @@
         {% if prediction %}
         <div class="result-card">
             <h2>Predicted Price for {{ symbol }}: ₹{{ prediction }}</h2>
+            
+            {% if accuracy %}
+            <div style="background: #f0f8ff; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2196F3;">
+                <p style="margin: 0; font-size: 1.1rem; color: #333;">
+                    <strong>Model Accuracy:</strong> 
+                    {% if accuracy >= 80 %}
+                    <span style="font-size: 1.3rem; font-weight: 600; color: #4CAF50;">
+                        {{ accuracy }}%
+                    </span>
+                    {% elif accuracy >= 60 %}
+                    <span style="font-size: 1.3rem; font-weight: 600; color: #FF9800;">
+                        {{ accuracy }}%
+                    </span>
+                    {% else %}
+                    <span style="font-size: 1.3rem; font-weight: 600; color: #F44336;">
+                        {{ accuracy }}%
+                    </span>
+                    {% endif %}
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;">
+                    Based on 30-day backtesting
+                </p>
+            </div>
+            {% endif %}
+            
             <p style="color: green; font-weight: 600; font-size: 1.2rem;">{{ suggestion }}</p>
             <p style="color: #333; font-size: 1rem;">{{ reasoning }}</p>
             <img src="{{ url_for('static', filename=symbol + '_plot.png') }}" alt="Stock Plot">
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="result-card" style="background: #ffebee;">
+            <p style="color: #c62828; font-weight: 600;">Error: {{ error }}</p>
         </div>
         {% endif %}
     </div>
