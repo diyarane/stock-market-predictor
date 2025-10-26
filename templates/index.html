@@ -9,16 +9,60 @@
 <body>
     <div class="container">
         <h1>📊 Stock Market Predictor</h1>
+        
+        <!-- Suggested Companies Section -->
+        <div class="suggested-section">
+            <h3>💡 Popular Stocks to Analyze</h3>
+            <div class="stock-grid">
+                <button class="stock-card" onclick="predictStock('AAPL')">
+                    <span class="stock-symbol">AAPL</span>
+                    <span class="stock-name">Apple Inc.</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('MSFT')">
+                    <span class="stock-symbol">MSFT</span>
+                    <span class="stock-name">Microsoft</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('GOOGL')">
+                    <span class="stock-symbol">GOOGL</span>
+                    <span class="stock-name">Google</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('AMZN')">
+                    <span class="stock-symbol">AMZN</span>
+                    <span class="stock-name">Amazon</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('TSLA')">
+                    <span class="stock-symbol">TSLA</span>
+                    <span class="stock-name">Tesla</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('META')">
+                    <span class="stock-symbol">META</span>
+                    <span class="stock-name">Meta (Facebook)</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('NVDA')">
+                    <span class="stock-symbol">NVDA</span>
+                    <span class="stock-name">NVIDIA</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('NFLX')">
+                    <span class="stock-symbol">NFLX</span>
+                    <span class="stock-name">Netflix</span>
+                </button>
+                <button class="stock-card" onclick="predictStock('RELIANCE.NS')">
+                    <span class="stock-symbol">RELIANCE.NS</span>
+                    <span class="stock-name">Reliance Industries</span>
+                </button>
+            </div>
+        </div>
+
         <div class="card">
-            <form method="POST" action="/">
-                <input type="text" name="symbol" placeholder="Enter Stock Symbol (e.g., AAPL)" required>
+            <form method="POST" action="/" id="predictForm">
+                <input type="text" name="symbol" id="symbolInput" placeholder="Enter Stock Symbol (e.g., AAPL)" required>
                 <button type="submit">Predict</button>
             </form>
         </div>
 
         {% if prediction %}
         <div class="result-card">
-            <h2>Predicted Price for {{ symbol }}: ₹{{ prediction }}</h2>
+            <h2>Predicted Price for {{ symbol }}: ${{ prediction }}</h2>
             
             {% if accuracy %}
             <div style="background: #f0f8ff; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2196F3;">
@@ -56,5 +100,12 @@
         </div>
         {% endif %}
     </div>
+
+    <script>
+        function predictStock(symbol) {
+            document.getElementById('symbolInput').value = symbol;
+            document.getElementById('predictForm').submit();
+        }
+    </script>
 </body>
 </html>
